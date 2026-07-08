@@ -40,6 +40,12 @@ Summarizer        Task Splitter      Reminder           Recap
         v                  v                  v
    Qdrant           Notion API        Slack/WhatsApp
 (project memory)   (tasks + kanban)   (notifications)
+        |                                     ^
+        |                                     |
+        +----------- PostgreSQL (Neon) ------+
+        |          (pics, tasks, meetings)   |
+        v                                     |
+   Worker (queue polling)---------------------+
 ```
 
 Design principles:
