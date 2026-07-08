@@ -1,7 +1,6 @@
 """FastAPI entry point. Owns the asyncio DB pool lifecycle.
 
-Phase 0 surface: only GET /health. POST /event, auth, dedup, queue land in
-Phase 2 (blueprint sections 3.1 and 12.4).
+Phase 1: Full API surface per blueprint sections 3.1 and 10.
 """
 
 from __future__ import annotations
@@ -14,7 +13,7 @@ from fastapi import FastAPI
 
 from services.hermes.core.db import create_pool
 from services.hermes.core.settings import get_settings
-from services.hermes.gateway.routes import health
+from services.hermes.gateway.routes import health, pics, projects, meetings, upload, tasks, workflow
 
 
 @asynccontextmanager
@@ -30,7 +29,16 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 def create_app() -> FastAPI:
     app = FastAPI(title="Hermes Gateway", lifespan=lifespan)
+    
+    # Routes
     app.include_router(health.router)
+    app.include_router(pics.router)
+    app.include_router(projects.router)
+    app.include_router(meetings.router)
+    app.include_router(upload.router)
+    app.include_router(tasks.router)
+    app.include_router(workflow.router)
+    
     return app
 
 

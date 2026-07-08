@@ -614,13 +614,13 @@ services/hermes/
 ## 13. Status
 
 - [x] Architecture defined
-- [ ] Audio upload + STT integration
-- [ ] Agent prompt library
-- [ ] Output schema validation
-- [ ] Notion integration (page + kanban)
-- [ ] Qdrant project isolation
-- [ ] Reminder + Recap agents
-- [ ] OpenClaw orchestration
+- [x] Audio upload + STT integration
+- [x] Agent prompt library
+- [x] Output schema validation
+- [x] Notion integration (page + kanban)
+- [x] Qdrant project isolation
+- [x] Reminder + Recap agents
+- [x] Worker automation (pgmq + executor)
 - [ ] Production deployment
 
 This system prioritizes control over chaos, observability over magic, and
