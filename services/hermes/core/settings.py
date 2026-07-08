@@ -64,6 +64,20 @@ class Settings(BaseSettings):
     # --- Queue -------------------------------------------------------------
     queue_name: str = "hermes_events"
 
+    # --- Notion (Phase 2) --------------------------------------------------
+    notion_api_key: SecretStr | None = None
+    notion_database_id: str | None = None  # Default database for tasks
+
+    # --- Qdrant (Phase 2) --------------------------------------------------
+    qdrant_url: str = "http://localhost:6333"
+    qdrant_api_key: SecretStr | None = None
+
+    # --- Notifications (Phase 2) -------------------------------------------
+    slack_bot_token: SecretStr | None = None
+    slack_signing_secret: SecretStr | None = None
+    whatsapp_api_url: SecretStr | None = None
+    whatsapp_api_token: SecretStr | None = None
+
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
