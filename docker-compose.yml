@@ -1,0 +1,37 @@
+# Two-process topology from blueprint sections 4.6 and 12.2.
+# Gateway and worker scale independently and share only Neon.
+# pgbouncer / pgmq are not introduced until Phase 2.
+
+services:
+  gateway:
+    build: .
+    container_name: hermes-gateway
+    command:
+      - python
+      - -m
+      - uvicorn
+      - services.hermes.gateway.main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+    env_file: .env
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx,sys; sys.exit(0 if httpx.get('http://localhost:8000/health', timeout=2).status_code==200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  worker:
+    build: .
+    container_name: hermes-worker
+    command: ["python", "-m", "services.hermes.worker.main"]
+    env_file: .env
+    restart: unless-stopped
+    depends_on:
+      gateway:
+        condition: service_started
