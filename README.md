@@ -16,7 +16,7 @@ AI-powered meeting orchestration system that helps teams run more effective meet
 docker compose up -d
 
 # Run migrations
-docker compose exec gateway python -m services.hermes.migrations.runner
+docker compose exec gateway python -m services.openclaw.migrations.runner
 
 # Access the API
 curl http://localhost:8000/health
